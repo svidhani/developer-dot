@@ -2,7 +2,7 @@ swagger: '2.0'
 info:
   description: "The AvaTax SOAP API exposes the most commonly used available for interacting with the AvaTax service, allowing calculation of tax, modification of documents, and validation of addresses. If you're unsure of which API to use, a full comparison of the differences between the functionality provided by our REST and SOAP interfaces is documented [here](http://developer.avalara.com/avatax/soap-or-rest/).
   
-  The [REST API reference](http://developer.avalara.com/avatax/api-reference/tax/v1/) is also available.</p>"
+  The [REST API reference](http://developer.avalara.com/api-reference/avatax/rest/v2/) is also available.</p>"
   version: '1.0'
   title: AvaTax SOAP API
   termsOfService: 'http://www.avalara.com/terms/'
@@ -1035,7 +1035,6 @@ definitions:
       - LineNo
       - DestinationCode
       - OriginCode
-      - Qty
     properties:
       LineNo:
         maxLength: 50
@@ -1047,11 +1046,11 @@ definitions:
       DestinationCode:
         type: string
         example: '01'
-        description: 'Destination (ship-to) address code. `DestinationCode` references an address from the `Addresses` collection.'
+        description: 'Destination (ship-to) address code. `DestinationCode` references an address from the `Addresses` collection. Required if OriginCode is not provided.'
       OriginCode:
         type: string
         example: '02'
-        description: 'Origination (ship-from) address code. `OriginCode` references an address from the `Addresses` collection.'
+        description: 'Origination (ship-from) address code. `OriginCode` references an address from the `Addresses` collection. Required if DestinationCode is not provided.'
       ItemCode:
         maxLength: 50
         type: string
@@ -1150,7 +1149,7 @@ definitions:
         maxLength: 50
         type: string
         example: 45 Fremont Street
-        description: 'Address line 1, required if Latitude and Longitude are not provided.'
+        description: 'Address line 1, required if Latitude and Longitude are not provided or PostalCode is not provided.'
       Line2:
         maxLength: 50
         type: string
@@ -1745,6 +1744,7 @@ definitions:
           namespace: "http://avatax.avalara.com/services"
         properties: 
           Version:
+            type: string
             description: The service version of the AvaTax service.
             maxLength: 15
           TransactionId:

@@ -15,10 +15,10 @@
   ],
   "basePath": "/v2",
   "paths": {
-    "/accounts/{accountId}/companies": {
+    "/accounts/companies": {
       "parameters": [
         {
-          "$ref": "#/parameters/path_accountId"
+          "$ref": "#/parameters/header_jwt"
         }
       ],
       "get": {
@@ -99,12 +99,7 @@
             "description": "Company Code",
             "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "companyCode": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/Company"
             }
           }
         ],
@@ -139,10 +134,10 @@
         }
       }
     },
-    "/accounts/{accountId}/companies/{companyId}": {
+    "/accounts/companies/{companyId}": {
       "parameters": [
         {
-          "$ref": "#/parameters/path_accountId"
+          "$ref": "#/parameters/header_jwt"
         },
         {
           "$ref": "#/parameters/path_companyId"
@@ -184,13 +179,12 @@
     }
   },
   "parameters": {
-    "path_accountId": {
-      "name": "accountId",
-      "in": "path",
-      "description": "Account ID",
+    "header_jwt": {
+      "name": "Authorization",
+      "in": "header",
+      "description": "Bearer {auth}",
       "required": true,
-      "type": "string",
-      "format": "uuid"
+      "type": "string"
     },
     "path_companyId": {
       "name": "companyId",
@@ -365,7 +359,7 @@
         },
         "receiptsAreFullNoCumulativePisCofins": {
           "type": "boolean",
-          "description": "When th company is REAL PROFIT usually it operates under a Non-Cumulative PIS/COFINS regime\nBut exist some services that are always Cumulative regime.\nIf the company has all receipts from Non-Cumulative services this flag will be set to True.\nThis flag informs special conditions to credit of PIS/COFINS when this company is out of Free zone and  purchases from Free Zone Company\nQuando uma empresa fora da Zona Franca adquire uma produto ou serviço de uma empresa situada na Zona Franca de Manaus, o crédito de PIS E COFINS segue estas aliquotas diferenciadas.\nFundamentação, art. 5º da Instrução Normativa SRF nº 546/2005; art. 3º, § 12 da Lei nº 10.637/2002; art. 3º, § 17 da Lei nº 10.833/2003; art. 4º da Lei nº 11.307/2006.\nDESTINATÁRIO ALÍQUOTAS\nPIS COFINS\na) Venda efetuada a pessoa jurídica estabelecida fora da Zona Franca de Manaus, que apure a Contribuição para o PIS/PASEP no regime de não-cumulatividade débito 0,65% 3% crédito 1% 4,6%\nc) Venda efetuada a pessoa jurídica estabelecida fora da Zona Franca de Manaus, que apure o imposto de renda com base no lucro real e que tenha sua receita, total ou parcialmente, excluída do regime de incidência não-cumulativa da Contribuição para o PIS/PASEP débito 1,3% 6% crédito 1,65% 7,6%\n"
+          "description": "When th company is REAL PROFIT usually it operates under a Non-Cumulative PIS/COFINS regime\nBut exist some services that are always Cumulative regime.\nIf the company has all receipts from Non-Cumulative services this flag will be set to True.\nThis flag informs special conditions to credit of PIS/COFINS when this company is out of Free zone and  purchases from Free Zone Company\nQuando uma empresa fora da Zona Franca adquire uma produto ou serviço de uma empresa situada na Zona Franca de Manaus, o crédito de PIS E COFINS segue estas aliquotas diferenciadas.\nFundamentação, art. 5º da Instrução Normativa SRF nº 546/2005; art. 3º, § 12 da Lei nº 10.637/2002; art. 3º, § 17 da Lei nº 10.833/2003; art. 4º da Lei nº 11.307/2006.\nDESTINATÁRIO ALÍQUOTAS.\nPIS COFINS\na) Venda efetuada a pessoa jurídica estabelecida fora da Zona Franca de Manaus, que apure a Contribuição para o PIS/PASEP no regime de não-cumulatividade débito 0,65% 3% crédito 1% 4,6%\nc) Venda efetuada a pessoa jurídica estabelecida fora da Zona Franca de Manaus, que apure o imposto de renda com base no lucro real e que tenha sua receita, total ou parcialmente, excluída do regime de incidência não-cumulativa da Contribuição para o PIS/PASEP débito 1,3% 6% crédito 1,65% 7,6%\n"
         },
         "inssWithholdSubjectTo": {
           "type": "boolean",
@@ -388,6 +382,10 @@
           "type": "boolean",
           "description": "ICMS Exempt when Tax Regime is Simplified because total gross revenue is bellow amount defined by state (see PARANÁ State)\nIsenção do ICMS no Simples Nacional para faixa de receita bruta\n"
         },
+        "subjectToPayrollTaxRelief": {
+          "type": "boolean",
+          "description": "Sujeito à desoneração de folha de pagamento."
+        },
         "configuration": {
           "type": "object",
           "properties": {
@@ -401,7 +399,6 @@
             },
             "certificateexpiration": {
               "type": "string",
-              "format": "date-time",
               "description": "expiration date of this certificate"
             },
             "logo": {
@@ -542,7 +539,7 @@
         "cityGovernment",
         "foreign"
       ],
-      "description": "Entity Type (business, individual, federal government, state government, city government foreign)"
+      "description": "Entity Type (business, individual, federal government, state government, city government, foreign)"
     },
     "FederalTaxRegime": {
       "type": "string",

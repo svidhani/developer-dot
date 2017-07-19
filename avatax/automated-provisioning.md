@@ -12,7 +12,7 @@ This API allows partners to automatically provision individual customer accounts
 <h4>Get API Key</h4>
 To get access to this API, contact your Customer Account Manager or email <a href="mailto:developer@avalara.com">developer@avalara.com</a>.
 <h4>Documentation</h4>
-Here is the <a href="/avatax/api-reference/onboarding/v1/">Onboarding API Documentation</a> for the RESTful Onboarding API. This API is designed so that a single operation represents a group of provisioning steps; an account can be provisioned with a company and single location (with associated nexus) and a single admin user with a single POST /accounts.
+Here is the <a href="/api-reference/onboarding/">Onboarding API Documentation</a> for the RESTful Onboarding API. This API is designed so that a single operation represents a group of provisioning steps; an account can be provisioned with a company and single location (with associated nexus) and a single admin user with a single POST /accounts.
 
 <h3>Develop Your Integration</h3>
 Once you have access to the Onboarding API, there are a number of options and simplifications you can present to your users.
@@ -33,7 +33,7 @@ If a merchant wants to upgrade from a free trial account to a full account, or t
 When provisioning customer accounts with the onboarding API, you must perform various provisioning steps in a specific order.
 <h4>Request 1: /accounts</h4>
 The first request in the workflow creates a single account with:
-<ul>
+<ul class="normal">
 	<li>one Account Admin-level user</li>
 	<li>one default company profile</li>
 	<li>one defined location</li>

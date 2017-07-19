@@ -4,7 +4,7 @@ title: Develop
 product: avaTax
 doctype: use_cases
 nav: apis
-community: document
+disqus: 1
 ---
 
 {% for page in site.avatax %}
@@ -45,4 +45,4 @@ In addition to the workflows above, there are additional document types and proc
 	<li>If invoices or returns are voided, that cancellation needs to be communicated to AvaTax with a CancelTax call.</li>
 </ul>
 
-If you're ready to start some testing, you may want to review the <a href="/avatax/api-reference/tax/v1">API Reference</a>, how we deal with <a href="/avatax/calculating-tax#ShippingAndFreight">shipping charges</a>, and pick up some <a href="/avatax/sample-code">sample code</a>.
+If you're ready to start some testing, you may want to review the <a href="/api-reference/avatax/rest/v1">API Reference</a>, how we deal with <a href="/avatax/calculating-tax#ShippingAndFreight">shipping charges</a>, and pick up some sample code.

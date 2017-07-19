@@ -5,7 +5,7 @@ description: ...
 date: 2016-11-28 11:00
 author: Kevin Hess
 comments: true
-categories: [Sales Tax APIs]
+categories: [avatax, tax content]
 product: blog
 doctype: blog
 disqus: 1
@@ -18,6 +18,7 @@ Today, we'll walk through a new API launching in the [AvaTax 2.16.12 release](ht
 ### The Point-of-Sale Tax Content File
 
 To begin, let's take a look at the template for the point-of-sale tax content file. Here are the details for each field included in the tax content file:
+<div class="mobile-table">
 
 <table class="styled-table">
 
@@ -237,6 +238,8 @@ To begin, let's take a look at the template for the point-of-sale tax content fi
 
 </table>
 
+</div>
+
 ### Getting Started
 
 Before we start building our JSON request, you'll want to ensure you have Locations and Items configured within your AvaTax account. Avalara's Help Center is a great resource for learning how to [Add or Import Company Locations](https://help.avalara.com/000_Avalara_AvaTax/Manage_Locations/Add__or_Import_Company_Locations) and [Add or Import Items](https://help.avalara.com/000_Avalara_AvaTax/Manage_Product_Taxability/020_Add_Items) .You can also take advantage of our suite of REST v2 endpoints for configuring your AvaTax account with Locations and Items. _Please note that the Point-of-Sale data API uses the Tax Codes assigned to your Items to generate a response._
@@ -296,7 +299,7 @@ But what if you only want to include a couple of Locations or Tax Codes? Or mayb
 }
 ```
 
-Or, even easier, you can request the data file for one location at a time using the [individual location point-of-sale data API](https://sandbox-rest/swagger/ui/index.html#!/Locations/BuildPointOfSaleDataFile):
+Or, even easier, you can request the data file for one location at a time using the [individual location point-of-sale data API](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/TaxContent/BuildTaxContentFileForLocation/):
 
 `GET /api/v2/companies/12345/locations/56789/pointofsaledata`
 

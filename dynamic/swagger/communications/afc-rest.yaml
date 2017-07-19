@@ -5,7 +5,8 @@ info:
   title: Saas Pro
   description: The AFC REST service provides APIs to calculate taxes on communiations transactions and lookup tax rate and jurisdiction information.
   termsOfService: None
-host: development.avalara.net
+host: communicationsua.avalara.net
+x-production-host: communications.avalara.net
 basePath: "/"
 schemes:
   - https
@@ -538,6 +539,35 @@ paths:
             items:
               "$ref": "#/definitions/TaxData"
       deprecated: false
+  "/api/v1/CommitTransactions":
+    post:
+      tags:
+      - Commit
+      summary: Calculate taxes on a transaction
+      description: This method accepts transaction data and performs appropriate tax
+        calculations.
+      operationId: ApiV1CommitTransactionsPost
+      consumes:
+      - application/json
+      - text/json
+      - application/json-patch+json
+      produces:
+      - text/plain
+      - application/json
+      - text/json
+      parameters:
+      - name: commitData
+        in: body
+        description: Document number and optional field information.
+        required: false
+        schema:
+          "$ref": "#/definitions/CommitData"
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: boolean
+      deprecated: false
   "/api/v1/CustMode/BeginBatch":
     get:
       tags:
@@ -839,13 +869,13 @@ definitions:
           "$ref": "#/definitions/BridgeConferenceParticipant"
       CustomerType:
         format: int32
-        description: See the CommsPlatform.API.WrapperClasses User's Manual for valid
-          customer types.
+        description: Customer Type. See the "TM_00116_AFC SaaS pro Telecom Developer
+          Manual.pdf" for valid customer types.
         type: integer
       BusinessClass:
         format: int32
-        description: See the CommsPlatform.API.WrapperClasses User's Manual for valid
-          business classes.
+        description: Business Class. See the "TM_00116_AFC SaaS pro Telecom Developer
+          Manual.pdf" for valid business classes.
         type: integer
       Sale:
         description: Indicates if this is a retail sale. Use false for resale/wholesale
@@ -861,8 +891,8 @@ definitions:
         type: integer
       ServiceClass:
         format: int32
-        description: Service class. See the CommsPlatform.API.WrapperClasses User's
-          Manual for a list of valid service classes.
+        description: Service class. See the "TM_00116_AFC SaaS pro Telecom Developer
+          Manual.pdf" for a list of valid service classes.
         type: integer
       Date:
         format: date-time
@@ -912,8 +942,8 @@ definitions:
           "$ref": "#/definitions/TaxExemption"
       ExemptionType:
         format: int32
-        description: Exemption type. See the CommsPlatform.API.WrapperClasses User's
-          Manual for a list of valid exemption types.
+        description: Exemption type. See the "TM_00116_AFC SaaS pro Telecom Developer
+          Manual.pdf" for a list of valid exemption types.
         type: integer
       InvoiceNumber:
         format: int32
@@ -964,8 +994,8 @@ definitions:
         type: integer
       AdjustmentMethod:
         format: int32
-        description: Adjustment method. See the CommsPlatform.API.WrapperClasses User's
-          Manual for a list of valid adjustment methods.
+        description: Adjustment method. See the "TM_00116_AFC SaaS pro Telecom Developer
+          Manual.pdf" for a list of valid adjustment methods.
         type: integer
       Lines:
         format: int32
@@ -984,8 +1014,8 @@ definitions:
         type: boolean
       DiscountType:
         format: int32
-        description: See the CommsPlatform.API.WrapperClasses User's Manual for valid
-          discount types.
+        description: Discount Type. See the "TM_00116_AFC SaaS pro Telecom Developer
+          Manual.pdf" for valid discount types.
         type: integer
       FacilitiesBased:
         description: Specifies if the carrier delivering the service has company owned
@@ -1020,6 +1050,13 @@ definitions:
         type: array
         items:
           "$ref": "#/definitions/OptionalField"
+      DocumentCode:
+        description: Document code.
+        type: string
+      Commit:
+        description: Indicates if the transaction should be committed as soon at it
+          is processed.
+        type: boolean
   ZipAddress:
     description: Zip Address Class
     required:
@@ -1085,13 +1122,13 @@ definitions:
         type: integer
       TaxLevel:
         format: int32
-        description: Tax level. See the CommsPlatform.API.WrapperClasses User's Manual
-          for a list of valid tax levels.
+        description: Tax level. See the "TM_00116_AFC SaaS pro Telecom Developer
+          Manual.pdf" for a list of valid tax levels.
         type: integer
       TaxType:
         format: int32
-        description: Tax type. See the CommsPlatform.API.WrapperClasses User's Manual
-          for a list of valid tax types.
+        description: Tax type. See the Telecom Mapping guidelines ("TM_00505_AFC Telecom
+          Mapping Guidelines.pdf") for a list of valid tax types.
         type: integer
   Exclusion:
     description: Exclusions Class
@@ -1124,8 +1161,8 @@ definitions:
         type: string
       TaxCategory:
         format: int32
-        description: See the CommsPlatform.API.WrapperClasses User's Manual for valid
-          tax categories.
+        description: Tax Category. See the "TM_00116_AFC SaaS pro Telecom Developer
+          Manual.pdf" for valid tax categories.
         type: integer
   OptionalField:
     description: Data structure used to provide optional alphanumeric data for transactions.
@@ -1188,16 +1225,16 @@ definitions:
     properties:
       AdjustmentType:
         format: int32
-        description: Adjustmnet type. See the CommsPlatform.API.WrapperClasses User's
-          Manual for a list of valid adjustment types.
+        description: Adjustmnet type. See the "TM_00116_AFC SaaS pro Telecom Developer
+          Manual.pdf" for a list of valid adjustment types.
         type: integer
       Billable:
         description: Indicates if the tax is billable to the customer.
         type: boolean
       CalculationType:
         format: int32
-        description: Calculation type. See the CommsPlatform.API.WrapperClasses User's
-          Manual for a list of valid calculation types.
+        description: Calculation type. See the "TM_00116_AFC SaaS pro Telecom Developer
+          Manual.pdf" for a list of valid calculation types.
         type: integer
       CategoryDescription:
         description: Tax Category Description.
@@ -1220,8 +1257,7 @@ definitions:
         type: string
       ExemptionType:
         format: int32
-        description: "Exemption type from transaction input. See the CommsPlatform.API.WrapperClasses
-          User's Manual for a list of valid exemption types."
+        description: Exemption type from transaction input.
         type: integer
       ExemptSaleAmount:
         format: double
@@ -1295,13 +1331,13 @@ definitions:
         type: number
       TaxLevel:
         format: int32
-        description: Tax level. See the CommsPlatform.API.WrapperClasses User's Manual
-          for a list of valid tax levels.
+        description: Tax level. See the "TM_00116_AFC SaaS pro Telecom Developer
+          Manual.pdf" for a list of valid tax levels.
         type: integer
       TaxType:
         format: int32
-        description: Tax type. See the CommsPlatform.API.WrapperClasses User's Manual
-          for a list of valid tax types.
+        description: Tax type. See the Telecom Mapping guidelines ("TM_00505_AFC Telecom
+          Mapping Guidelines.pdf") for a list of valid tax types.
         type: integer
       Lines:
         format: int32
@@ -1386,13 +1422,13 @@ definitions:
         type: number
       CustomerType:
         format: int32
-        description: Customer type. See the CommsPlatform.API.WrapperClasses User's
-          Manual for a list of valid customer types.
+        description: Customer type. See the "TM_00116_AFC SaaS pro Telecom Developer
+          Manual.pdf" for a list of valid customer types.
         type: integer
       BusinessClass:
         format: int32
-        description: Business class. See the CommsPlatform.API.WrapperClasses User's
-          Manual for a list of valid business classes.
+        description: Business class. See the "TM_00116_AFC SaaS pro Telecom Developer
+          Manual.pdf" for a list of valid business classes.
         type: integer
       Sale:
         description: Indicates if this is a retail sale. Use false for resale/wholesale
@@ -1408,8 +1444,8 @@ definitions:
         type: integer
       ServiceClass:
         format: int32
-        description: Service class. See the CommsPlatform.API.WrapperClasses User's
-          Manual for a list of valid Service Classes
+        description: Service class. See the "TM_00116_AFC SaaS pro Telecom Developer
+          Manual.pdf" for a list of valid Service Classes.
         type: integer
       Date:
         format: date-time
@@ -1459,8 +1495,8 @@ definitions:
           "$ref": "#/definitions/TaxExemption"
       ExemptionType:
         format: int32
-        description: Exemtion type. See the CommsPlatform.API.WrapperClasses User's
-          Manual for a list of valid exemption types.
+        description: Exemtion type. See the "TM_00116_AFC SaaS pro Telecom Developer
+          Manual.pdf" for a list of valid exemption types.
         type: integer
       InvoiceNumber:
         format: int32
@@ -1511,8 +1547,8 @@ definitions:
         type: integer
       AdjustmentMethod:
         format: int32
-        description: Adjustment method. See the CommsPlatform.API.WrapperClasses User's
-          Manual for a list of valid adjustment methods.
+        description: Adjustment method. See the "TM_00116_AFC SaaS pro Telecom Developer
+          Manual.pdf" for a list of valid adjustment methods.
         type: integer
       Lines:
         format: int32
@@ -1531,8 +1567,8 @@ definitions:
         type: boolean
       AdjustmentDiscount:
         format: int32
-        description: Adjustment discount type. See the CommsPlatform.API.WrapperClasses User's
-          Manual for a list of valid discount types.
+        description: Adjustment discount type. See the "TM_00116_AFC SaaS pro Telecom
+          Developer Manual.pdf" for a list of valid discount types.
         type: integer
       FacilitiesBased:
         description: Specifies if the carrier delivering the service has company owned
@@ -1571,6 +1607,35 @@ definitions:
         description: Indicates if the charge of this transaction is tax-inclusive
           (reverse tax calculation).
         type: boolean
+      SafeHarborOverrides:
+        description: List of overrides for the USF safe harbor rate.
+        type: array
+        items:
+          "$ref": "#/definitions/SafeHarborOverride"
+      DocumentCode:
+        description: Document code.
+        type: string
+      Commit:
+        description: Indicates if the transaction should be committed as soon at it
+          is processed.
+        type: boolean
+  SafeHarborOverride:
+    description: Data structure used to override the safe harbor rate for a USF tax
+      type.
+    type: object
+    properties:
+      SafeHarborType:
+        format: int32
+        description: Safe harbor type (1 = Cellular, 2 = VoIP, 4 = Paging).
+        type: integer
+      OriginalFederalTam:
+        format: double
+        description: Original Federal TAM value to override.
+        type: number
+      NewFederalTam:
+        format: double
+        description: New TAM value that will replace the original TAM value.
+        type: number
   ProRatedTransaction:
     description: Parameter for pro-rated tax calculation API.
     required:
@@ -1630,18 +1695,18 @@ definitions:
         type: integer
       Scope:
         format: int32
-        description: Scope for override. See tax levels in the CommsPlatform.API.WrapperClasses
-          User's Manual for valid values.
+        description: Scope for override. See the "TM_00101_AFC User Manual_Telecom.pdf" for
+          valid values.
         type: integer
       TaxType:
         format: int32
-        description: Tax type. See the CommsPlatform.API.WrapperClasses User's Manual
-          for a list of valid tax types.
+        description: Tax type. See the Telecom Mapping guidelines ("TM_00505_AFC Telecom
+          Mapping Guidelines.pdf") for a list of valid tax types.
         type: integer
       TaxLevel:
         format: int32
-        description: Tax level. See the CommsPlatform.API.WrapperClasses User's Manual
-          for a list of valid tax levels.
+        description: Tax level. See the "TM_00116_AFC SaaS pro Telecom Developer
+          Manual.pdf" for a list of valid tax levels.
         type: integer
       LevelExemptible:
         description: Indicates if the tax can be exempted using level exemptions.
@@ -1685,6 +1750,64 @@ definitions:
         description: For sales and use taxes only (tax types 1 and 49), indicates
           that this tax replaces the tax at the county level.
         type: boolean
+  CommitData:
+    description: Parameter for CommitTransactions API.
+    type: object
+    properties:
+      DocumentCode:
+        description: Document code.
+        type: string
+      Committed:
+        description: Indicates if transactions for the specified document code should
+          be committed.
+        type: boolean
+      CustomerNumber:
+        description: Overrides value for CustomerNumber field in reports.
+        type: string
+      InvoiceNumber:
+        format: int32
+        description: Overrides value for InvoiceNumber field in reports.
+        type: integer
+      Optional:
+        format: int32
+        description: Overrides value for Optional field in reports.
+        type: integer
+      Optional4:
+        format: int32
+        description: Overrides value for Optional4 field in reports.
+        type: integer
+      Optional5:
+        format: int32
+        description: Overrides value for Optional5 field in reports.
+        type: integer
+      Optional6:
+        format: int32
+        description: Overrides value for Optional6 field in reports.
+        type: integer
+      Optional7:
+        format: int32
+        description: Overrides value for Optional7 field in reports.
+        type: integer
+      Optional8:
+        format: int32
+        description: Overrides value for Optional8 field in reports.
+        type: integer
+      Optional9:
+        format: int32
+        description: Overrides value for Optional9 field in reports.
+        type: integer
+      Optional10:
+        format: int32
+        description: Overrides value for Optional10 field in reports.
+        type: integer
+      OptionalAlpha1:
+        description: Overrides value for OptionalAlpha1 field in reports.
+        type: string
+      OptionalFields:
+        description: Overrides value for OptionalFields field in reports.
+        type: array
+        items:
+          "$ref": "#/definitions/OptionalField"
   CustModeTransaction:
     description: Parameter for the CustMode/CalcTaxes and CustMode/CalcAdj APIs.
     required:
@@ -1718,6 +1841,13 @@ definitions:
         description: Indicates if the individual transaction taxes should be returned
           in the response.
         type: boolean
+      DocumentCode:
+        description: Document code.
+        type: string
+      Commit:
+        description: Indicates if the transaction should be committed as soon at it
+          is processed.
+        type: boolean
   CustomerResults:
     description: Data structure returned when processing transactions in customer
       mode.
@@ -1743,18 +1873,18 @@ definitions:
         type: integer
       TaxType:
         format: int32
-        description: Tax type. See the CommsPlatform.API.WrapperClasses User's Manual
-          for a list of valid tax types.
+        description: Tax type. See the Telecom Mapping guidelines ("TM_00505_AFC Telecom
+          Mapping Guidelines.pdf") for a list of valid tax types.
         type: integer
       TaxLevel:
         format: int32
-        description: Tax level. See the CommsPlatform.API.WrapperClasses User's Manual
-          for a list of valid tax levels.
+        description: Tax level. See the "TM_00116_AFC SaaS pro Telecom Developer
+          Manual.pdf" for a list of valid tax levels.
         type: integer
       CalculationType:
         format: int32
-        description: Calculation type. See the CommsPlatform.API.WrapperClasses User's
-          Manual for a list of valid calculation types.
+        description: Calculation type. See the "TM_00116_AFC SaaS pro Telecom Developer
+          Manual.pdf" for a list of valid calculation types.
         type: integer
       Rate:
         format: double
@@ -1830,6 +1960,13 @@ definitions:
         description: Indicates if the individual transaction taxes should be returned
           in the response.
         type: boolean
+      DocumentCode:
+        description: Document code.
+        type: string
+      Commit:
+        description: Indicates if the transaction should be committed as soon at it
+          is processed.
+        type: boolean
   RequestPCodeDetail:
     description: Request PCode Detail Class
     type: object
@@ -1886,13 +2023,13 @@ definitions:
     properties:
       TaxType:
         format: int32
-        description: Tax type. See the CommsPlatform.API.WrapperClasses User's Manual
+        description: Tax type. See the "TM_00116_AFC SaaS pro Telecom Developer Manual.pdf"
           for a list of valid tax types.
         type: integer
       TaxLevel:
         format: int32
-        description: Tax level. See the CommsPlatform.API.WrapperClasses User's Manual
-          for a list of valid tax levels.
+        description: Tax level. See the "TM_00116_AFC SaaS pro Telecom Developer
+          Manual.pdf" for a list of valid tax levels.
         type: integer
       RateHistory:
         description: Tax rate history.

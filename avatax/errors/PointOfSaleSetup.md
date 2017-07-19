@@ -3,7 +3,7 @@ layout: page
 title: PointOfSaleSetup
 number: 251
 categories: [AvaTax Error Codes]
-disqus: 0
+disqus: 1
 ---
 
 ## Summary
@@ -32,4 +32,4 @@ Invalid parameter provided in the Point-Of-Sale file request.
 
 ## Explanation
 
-The value you provided in your point-of-sale file request was invalid or unrecognized.  Please check the <a href="https://sandbox-rest.avatax.com/swagger/ui/index.html">online developer documentation</a> for more information about acceptable values.
+The value you provided in your point-of-sale file request was invalid or unrecognized.  Please check the <a href="https://developer.avalara.com/api-reference/avatax/rest/v2/">online developer documentation</a> for more information about acceptable values.

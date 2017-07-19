@@ -3,7 +3,7 @@ layout: page
 title: AddressLocationNotFound
 number: 310
 categories: [AvaTax Error Codes]
-disqus: 0
+disqus: 1
 ---
 
 ## Summary
@@ -65,5 +65,5 @@ Some steps to check:
 <ul class="normal">
     <li>Did you use the correct company code when creating the transaction?</li>
     <li>Did you use the correct location code?</li>
-    <li>Can you fetch the location using the <a href="https://sandbox-rest.avatax.com/swagger/ui/index.html#!/Locations/QueryLocations">QueryLocations API</a>?</li>
+    <li>Can you fetch the location using the <a href="https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Locations/QueryLocations/">QueryLocations API</a>?</li>
 </ul>
